@@ -7,7 +7,7 @@ public class enemyPatrol : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private bool movingRight = true;
-    public float speed = 10f;
+    public float speed = 30f;
 
     void Start()
     {
