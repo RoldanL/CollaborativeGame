@@ -6,6 +6,10 @@ TagManager:
   tags:
   - agilityPotion
   - Enemy
+  - defensePotion
+  - Obstacle
+  - healthPotion
+  - Particle
   layers:
   - Default
   - TransparentFX
