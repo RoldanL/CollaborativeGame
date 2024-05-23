@@ -12,6 +12,7 @@ TagManager:
   - Particle
   - bullet
   - Ground
+  - FallTrigger
   layers:
   - Default
   - TransparentFX

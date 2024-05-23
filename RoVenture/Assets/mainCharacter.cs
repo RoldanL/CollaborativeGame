@@ -181,17 +181,28 @@ public class mainCharacter : MonoBehaviour
             if (life <= 0)
             {
                 // Respawn the character at the initial respawn position
-                transform.position = respawnPosition;
-
-                // Reset life
-                life = 3;
-
-                Debug.Log("Character respawned at: " + respawnPosition);
+                Time.timeScale = 0;
+                Debug.Log("Game Over");
             }
             else
             {
                 // Trigger blinking effect
                 StartCoroutine(BlinkingEffect());
+            }
+        }
+        if (collision.gameObject.CompareTag("FallTrigger"))
+        {
+            life--;
+            if(life >= 1)
+            {
+                transform.position = respawnPosition;
+                StartCoroutine(BlinkingEffect());
+                Debug.Log("Remaining life: " + life);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                Debug.Log("Game Over");
             }
         }
     }

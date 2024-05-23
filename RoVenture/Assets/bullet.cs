@@ -76,11 +76,6 @@ public class Bullet : MonoBehaviour
                 // Destroy the bullet when it collides with the ground
                 Destroy(gameObject);
             }
-            else
-            {
-                // Destroy the bullet when it collides with another collider
-                Destroy(gameObject);
-            }
         }
     }
 
@@ -110,6 +105,9 @@ public class Bullet : MonoBehaviour
 
         // Destroy the enemy object
         Destroy(enemy);
+
+        // Now destroy the bullet
+        Destroy(gameObject);
 
         yield return null;
     }
