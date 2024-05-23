@@ -48,6 +48,7 @@ public class mainCharacter : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Update is called once per frame
     private void Update()
     {
         // Check if the speed is boosted
@@ -72,22 +73,26 @@ public class mainCharacter : MonoBehaviour
             anim.SetBool("Attacking", true);
             // Set the attack state to true
             isAttacking = true;
+
+            // Shoot only if the cooldown time has passed
+    
         }
 
         // Check if the attack key is released and the player is attacking
         if (Input.GetKeyUp(KeyCode.Return))
         {
-            // Set the attacking animation parameter to false
-            anim.SetBool("Attacking", false);
-            // Reset the attack state to false
-            isAttacking = false;
 
-            // Shoot only if the cooldown time has passed
             if (Time.time - lastShootTime > shootCooldown)
             {
                 Shoot();
                 lastShootTime = Time.time;
             }
+            // Set the attacking animation parameter to false
+            anim.SetBool("Attacking", false);
+            // Reset the attack state to false
+            isAttacking = false;
+
+
         }
 
         if (isGrounded())
@@ -134,6 +139,9 @@ public class mainCharacter : MonoBehaviour
         }
     }
 
+
+
+
     private void Shoot()
     {
         if (bulletPrefab != null)
@@ -141,7 +149,7 @@ public class mainCharacter : MonoBehaviour
             // Adjust the bullet's position based on character flip
             Vector3 bulletOffset = isFlipped ? new Vector3(-0.7f, -0.4f, 0f) : new Vector3(0.7f, -0.4f, 0f);
             GameObject newBullet = Instantiate(bulletPrefab, transform.position + bulletOffset, Quaternion.identity);
-            bullet bulletComponent = newBullet.GetComponent<bullet>(); // Get the bullet component
+            Bullet bulletComponent = newBullet.GetComponent<Bullet>(); // Get the bullet component
             if (bulletComponent != null)
             {
                 bulletComponent.SetDirection(isFlipped); // Pass the flip state of the character to the bullet
@@ -159,36 +167,9 @@ public class mainCharacter : MonoBehaviour
         Debug.Log("Collision detected with: " + collision.gameObject.name);
 
         // Check if the character collides with an object with the "Enemy" tag and is not immune
-        if (collision.gameObject.CompareTag("Enemy") && !isImmune)
+        if ((collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Obstacle")) && !isImmune)
         {
-            Debug.Log("Character collided with enemy");
-
-            // Decrease life by one
-            life--;
-
-            // Debug log remaining life
-            Debug.Log("Remaining life: " + life);
-
-            // Check if life is zero
-            if (life <= 0)
-            {
-                // Respawn the character at the initial respawn position
-                transform.position = respawnPosition;
-
-                // Reset life
-                life = 3;
-
-                Debug.Log("Character respawned at: " + respawnPosition);
-            }
-            else
-            {
-                // Trigger blinking effect
-                StartCoroutine(BlinkingEffect());
-            }
-        }
-        else if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            Debug.Log("Character collided with obstacle");
+            Debug.Log("Character collided with enemy or obstacle");
 
             // Decrease life by one
             life--;

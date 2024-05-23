@@ -17,6 +17,10 @@ public class robotEnemy : MonoBehaviour
         StartCoroutine(MoveRoutine());
     }
 
+
+
+
+
     IEnumerator MoveRoutine()
     {
         while (true) // Infinite loop for continuous movement
