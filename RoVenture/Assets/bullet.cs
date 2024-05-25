@@ -87,18 +87,29 @@ public class Bullet : MonoBehaviour
 
     private IEnumerator EnemyDestructionEffects(GameObject enemy)
     {
-        // Shrink the enemy before destroying it
-        Vector3 originalScale = enemy.transform.localScale;
-        float shrinkDuration = 0.5f; // Duration over which the enemy will shrink
-
-        for (float t = 0; t < shrinkDuration; t += Time.deltaTime)
+        // Change the enemy's color to red
+        SpriteRenderer enemyRenderer = enemy.GetComponent<SpriteRenderer>();
+        if (enemyRenderer != null)
         {
-            enemy.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, t / shrinkDuration);
+            enemyRenderer.color = Color.red;
+        }
+
+        // Dissolve the enemy by reducing its alpha value over time
+        float dissolveDuration = 0.3f; // Duration of the dissolve effect
+        float startAlpha = enemyRenderer.color.a;
+
+        for (float t = 0; t < dissolveDuration; t += Time.deltaTime)
+        {
+            Color newColor = enemyRenderer.color;
+            newColor.a = Mathf.Lerp(startAlpha, 0f, t / dissolveDuration);
+            enemyRenderer.color = newColor;
             yield return null;
         }
 
-        // Ensure the enemy is completely scaled down
-        enemy.transform.localScale = Vector3.zero;
+        // Ensure the enemy is completely dissolved
+        Color finalColor = enemyRenderer.color;
+        finalColor.a = 0f;
+        enemyRenderer.color = finalColor;
 
         // Debug message to confirm enemy destruction
         Debug.Log("Destroying enemy: " + enemy.name);
