@@ -140,8 +140,6 @@ public class mainCharacter : MonoBehaviour
     }
 
 
-
-
     private void Shoot()
     {
         if (bulletPrefab != null)
@@ -153,6 +151,13 @@ public class mainCharacter : MonoBehaviour
             if (bulletComponent != null)
             {
                 bulletComponent.SetDirection(isFlipped); // Pass the flip state of the character to the bullet
+
+                // Flip the bullet sprite if necessary
+                SpriteRenderer bulletSpriteRenderer = newBullet.GetComponent<SpriteRenderer>();
+                if (bulletSpriteRenderer != null)
+                {
+                    bulletSpriteRenderer.flipX = !isFlipped; // Flip the bullet if character is facing right
+                }
             }
         }
     }
@@ -241,6 +246,30 @@ public class mainCharacter : MonoBehaviour
             Debug.Log("Remaining life: " + life);
             StartCoroutine(ShineEffect(1f)); // Trigger shining effect for 1 second
             Destroy(collision.gameObject); // Destroy the potion
+        }
+        
+        if (collision.gameObject.CompareTag("laser") && !isImmune)
+        {
+            Debug.Log("Character collided with enemy or obstacle");
+
+            // Decrease life by one
+            life--;
+
+            // Debug log remaining life
+            Debug.Log("Remaining life: " + life);
+
+            // Check if life is zero
+            if (life <= 0)
+            {
+                // Respawn the character at the initial respawn position
+                Time.timeScale = 0;
+                Debug.Log("Game Over");
+            }
+            else
+            {
+                // Trigger blinking effect
+                StartCoroutine(BlinkingEffect());
+            }
         }
         Debug.Log("Triggered: " + collision.gameObject.name); // Debug log for checking if OnTriggerEnter2D is called
 

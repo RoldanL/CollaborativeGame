@@ -13,6 +13,7 @@ TagManager:
   - bullet
   - Ground
   - FallTrigger
+  - laser
   layers:
   - Default
   - TransparentFX
