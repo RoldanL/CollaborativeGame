@@ -711,6 +711,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   bulletPrefab: {fileID: 7255569578178376842, guid: 4dc16aa0dcb38724a873a92a1fad7a14, type: 3}
+  shootSound: {fileID: 8300000, guid: ff47161e75a50a041b338ccda2779186, type: 3}
+  powerupsSound: {fileID: 8300000, guid: 06c6ddcf212ea604893e38df37e7b072, type: 3}
+  hitSound: {fileID: 8300000, guid: 94b9d48b435685747afe84f120fb5a6e, type: 3}
   lifeText: {fileID: 166313847}
 --- !u!50 &301200554
 Rigidbody2D:

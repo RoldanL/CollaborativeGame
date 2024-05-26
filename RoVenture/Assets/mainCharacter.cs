@@ -21,6 +21,9 @@ public class mainCharacter : MonoBehaviour
     private int life = 3; // Life of the character
     [SerializeField] private LayerMask jumpableGround;
     [SerializeField] private GameObject bulletPrefab; // Reference to the bullet prefab
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private AudioClip powerupsSound;
+    [SerializeField] private AudioClip hitSound;
     private float lastShootTime; // Time of the last shot
     private float shootCooldown = 2f; // Cooldown between shots
     private int enemyLayer; // Layer of the enemies
@@ -159,6 +162,12 @@ public class mainCharacter : MonoBehaviour
                     bulletSpriteRenderer.flipX = !isFlipped; // Flip the bullet if character is facing right
                 }
             }
+
+            // Play shoot sound if available
+            if (shootSound != null)
+            {
+                AudioSource.PlayClipAtPoint(shootSound, transform.position);
+            }
         }
     }
 
@@ -184,6 +193,10 @@ public class mainCharacter : MonoBehaviour
 
             // Debug log remaining life
             Debug.Log("Remaining life: " + life);
+            if (hitSound != null)
+            {
+                AudioSource.PlayClipAtPoint(hitSound, transform.position);
+            }
 
             // Check if life is zero
             if (life <= 0)
@@ -202,6 +215,10 @@ public class mainCharacter : MonoBehaviour
         {
             life--;
             UpdateLifeText(); // Update the life text
+            if (hitSound != null)
+            {
+                AudioSource.PlayClipAtPoint(hitSound, transform.position);
+            }
             if (life >= 1)
             {
                 transform.position = respawnPosition;
@@ -222,11 +239,19 @@ public class mainCharacter : MonoBehaviour
         {
             StartCoroutine(ApplySpeedBoost(10f, 5f)); // Apply speed boost for 5 seconds
             Destroy(collision.gameObject); // Destroy the potion
+            if (powerupsSound != null)
+            {
+                AudioSource.PlayClipAtPoint(powerupsSound, transform.position);
+            }
         }
         else if (collision.gameObject.CompareTag("defensePotion"))
         {
             StartCoroutine(ApplyImmunity(5f)); // Apply immunity for 5 seconds
             Destroy(collision.gameObject); // Destroy the potion
+            if (powerupsSound != null)
+            {
+                AudioSource.PlayClipAtPoint(powerupsSound, transform.position);
+            }
         }
         else if (collision.gameObject.CompareTag("healthPotion"))
         {
@@ -235,7 +260,14 @@ public class mainCharacter : MonoBehaviour
             StartCoroutine(ShineEffect(1f)); // Trigger shining effect for 1 second
             Destroy(collision.gameObject); // Destroy the potion
             UpdateLifeText(); // Update the life text
-        }
+            if (powerupsSound != null)
+            {
+                AudioSource.PlayClipAtPoint(powerupsSound, transform.position);
+            }
+        }if (powerupsSound != null)
+            {
+                AudioSource.PlayClipAtPoint(powerupsSound, transform.position);
+            }
 
         if (collision.gameObject.CompareTag("laser") && !isImmune)
         {
@@ -246,6 +278,10 @@ public class mainCharacter : MonoBehaviour
             UpdateLifeText();
             // Debug log remaining life
             Debug.Log("Remaining life: " + life);
+            if (hitSound != null)
+            {
+                AudioSource.PlayClipAtPoint(hitSound, transform.position);
+            }
 
             // Check if life is zero
             if (life <= 0)
