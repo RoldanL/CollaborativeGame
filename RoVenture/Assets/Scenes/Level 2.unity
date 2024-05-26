@@ -617,6 +617,7 @@ MonoBehaviour:
   powerupsSound: {fileID: 8300000, guid: 06c6ddcf212ea604893e38df37e7b072, type: 3}
   hitSound: {fileID: 8300000, guid: 94b9d48b435685747afe84f120fb5a6e, type: 3}
   jumpSound: {fileID: 8300000, guid: 067cdbe9fb19964449bb18d8b1019151, type: 3}
+  gameOverPanel: {fileID: 0}
   lifeText: {fileID: 1188493585}
 --- !u!50 &301200554
 Rigidbody2D:
@@ -127892,7 +127893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21278171, g: 0.172766, b: 0.79622644, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
