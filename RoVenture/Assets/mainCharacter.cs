@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // Add this line
 
 public class mainCharacter : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class mainCharacter : MonoBehaviour
     private Vector3 respawnPosition = new Vector3(-0.5f, 5.69f, 0f);
     private ParticleSystem auraParticleSystem;
 
+    // UI Text to show remaining life
+    public Text lifeText;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -46,9 +50,11 @@ public class mainCharacter : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
 
         auraParticleSystem = GetComponentInChildren<ParticleSystem>();
+
+        // Initialize the life text
+        UpdateLifeText();
     }
 
-    // Update is called once per frame
     // Update is called once per frame
     private void Update()
     {
@@ -74,15 +80,11 @@ public class mainCharacter : MonoBehaviour
             anim.SetBool("Attacking", true);
             // Set the attack state to true
             isAttacking = true;
-
-            // Shoot only if the cooldown time has passed
-    
         }
 
         // Check if the attack key is released and the player is attacking
         if (Input.GetKeyUp(KeyCode.Return))
         {
-
             if (Time.time - lastShootTime > shootCooldown)
             {
                 Shoot();
@@ -92,8 +94,6 @@ public class mainCharacter : MonoBehaviour
             anim.SetBool("Attacking", false);
             // Reset the attack state to false
             isAttacking = false;
-
-
         }
 
         if (isGrounded())
@@ -140,7 +140,6 @@ public class mainCharacter : MonoBehaviour
         }
     }
 
-
     private void Shoot()
     {
         if (bulletPrefab != null)
@@ -180,6 +179,9 @@ public class mainCharacter : MonoBehaviour
             // Decrease life by one
             life--;
 
+            // Update the life text
+            UpdateLifeText();
+
             // Debug log remaining life
             Debug.Log("Remaining life: " + life);
 
@@ -199,7 +201,8 @@ public class mainCharacter : MonoBehaviour
         if (collision.gameObject.CompareTag("FallTrigger"))
         {
             life--;
-            if(life >= 1)
+            UpdateLifeText(); // Update the life text
+            if (life >= 1)
             {
                 transform.position = respawnPosition;
                 StartCoroutine(BlinkingEffect());
@@ -211,24 +214,7 @@ public class mainCharacter : MonoBehaviour
                 Debug.Log("Game Over");
             }
         }
-   
     }
-
-    IEnumerator BlinkingEffect()
-    {
-        const float blinkTime = 0.1f; // Duration of each blink
-        const int blinkCount = 5; // Number of blinks
-
-        for (int i = 0; i < blinkCount; i++)
-        {
-            spriteRenderer.color = new Color(1f, 1f, 1f, 0f); // Set sprite opacity to transparent
-            yield return new WaitForSeconds(blinkTime);
-
-            spriteRenderer.color = new Color(1f, 1f, 1f, 1f); // Set sprite opacity to opaque
-            yield return new WaitForSeconds(blinkTime);
-        }
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -248,15 +234,16 @@ public class mainCharacter : MonoBehaviour
             Debug.Log("Remaining life: " + life);
             StartCoroutine(ShineEffect(1f)); // Trigger shining effect for 1 second
             Destroy(collision.gameObject); // Destroy the potion
+            UpdateLifeText(); // Update the life text
         }
-        
+
         if (collision.gameObject.CompareTag("laser") && !isImmune)
         {
             Debug.Log("Character collided with enemy or obstacle");
 
             // Decrease life by one
             life--;
-
+            UpdateLifeText();
             // Debug log remaining life
             Debug.Log("Remaining life: " + life);
 
@@ -279,7 +266,29 @@ public class mainCharacter : MonoBehaviour
         {
             //SceneManager.LoadScene("Level 2");
         }
+    }
 
+    private void UpdateLifeText()
+    {
+        if (lifeText != null)
+        {
+            lifeText.text = ": " + life;
+        }
+    }
+
+    private IEnumerator BlinkingEffect()
+    {
+        const float blinkTime = 0.1f; // Duration of each blink
+        const int blinkCount = 5; // Number of blinks
+
+        for (int i = 0; i < blinkCount; i++)
+        {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 0f); // Set sprite opacity to transparent
+            yield return new WaitForSeconds(blinkTime);
+
+            spriteRenderer.color = new Color(1f, 1f, 1f, 1f); // Set sprite opacity to opaque
+            yield return new WaitForSeconds(blinkTime);
+        }
     }
 
     private IEnumerator ApplySpeedBoost(float boostAmount, float duration)
@@ -392,6 +401,4 @@ public class mainCharacter : MonoBehaviour
             Debug.Log("no particle detected");
         }
     }
-
-
 }
