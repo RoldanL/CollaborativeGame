@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class mainCharacter : MonoBehaviour
 {
@@ -209,6 +210,10 @@ public class mainCharacter : MonoBehaviour
                 Time.timeScale = 0;
                 Debug.Log("Game Over");
             }
+        }
+        if (collision.gameObject.CompareTag("Door"))
+        {
+            //SceneManager.LoadScene("Level 2");
         }
     }
 

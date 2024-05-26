@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     private bool isFlipped = false; // Indicates if the character is flipped
     private float elapsedTime = 0f; // Timer to track the elapsed time
     private Vector3 previousPosition; // Previous position of the bullet
+    private int EnemyBigLife = 3;
 
     private void Start()
     {
@@ -76,8 +77,29 @@ public class Bullet : MonoBehaviour
                 // Destroy the bullet when it collides with the ground
                 Destroy(gameObject);
             }
+            else if (hit.collider.CompareTag("EnemyBig"))
+            {
+                // Retrieve the EnemyBigHealth component
+                EnemyBigHealth enemyHealth = hit.collider.GetComponent<EnemyBigHealth>();
+
+                // Check if the EnemyBigHealth component exists
+                if (enemyHealth != null)
+                {
+                    // Reduce enemy big's health
+                    enemyHealth.TakeDamage();
+
+                    // Check if the enemy big's health is less than or equal to 0
+                    if (enemyHealth.health <= 0)
+                    {
+                        // Start the destruction effects coroutine
+                        StartCoroutine(EnemyDestructionEffects(hit.collider.gameObject));
+                    }
+                }
+            }
         }
     }
+
+
 
     // Method to set the direction of the bullet
     public void SetDirection(bool flipped)

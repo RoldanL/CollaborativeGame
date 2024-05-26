@@ -8,6 +8,7 @@ public class enemyPatrol : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool movingRight = true;
     public float speed = 30f;
+    [SerializeField] private float distance = 2.0f;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class enemyPatrol : MonoBehaviour
             {
                 rb.velocity = new Vector2(speed, rb.velocity.y);
                 spriteRenderer.flipX = false; // Not flipped (facing right)
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(distance);
                 movingRight = false;
             }
             // Move left for 2 seconds
@@ -34,7 +35,7 @@ public class enemyPatrol : MonoBehaviour
             {
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
                 spriteRenderer.flipX = true; // Flipped (facing left)
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(distance);
                 movingRight = true;
             }
         }
