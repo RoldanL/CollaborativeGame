@@ -15,7 +15,7 @@ public class LevelMenu : MonoBehaviour
         {
             buttons[i].interactable = false;
         }
-        for (int i = 0;i < unlockedlevel; i++)
+        for (int i = 0; i < unlockedlevel; i++)
         {
             buttons[i].interactable = true;
         }
