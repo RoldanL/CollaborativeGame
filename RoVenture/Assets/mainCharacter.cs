@@ -28,7 +28,7 @@ public class mainCharacter : MonoBehaviour
     private float shootCooldown = 2f; // Cooldown between shots
     private int enemyLayer; // Layer of the enemies
     private int playerLayer; // Layer of the player
-
+    public GameOverPanel gameOverPanel;
     // Respawn position
     private Vector3 respawnPosition = new Vector3(-0.5f, 5.69f, 0f);
     private ParticleSystem auraParticleSystem;
@@ -201,9 +201,15 @@ public class mainCharacter : MonoBehaviour
             // Check if life is zero
             if (life <= 0)
             {
-                // Respawn the character at the initial respawn position
                 Time.timeScale = 0;
-                Debug.Log("Game Over");
+                if (gameOverPanel != null)
+                {
+                    gameOverPanel.GameOver();
+                }
+                else
+                {
+                    Debug.LogError("GameOverPanel is not assigned in the Inspector.");
+                }
             }
             else
             {
@@ -228,7 +234,14 @@ public class mainCharacter : MonoBehaviour
             else
             {
                 Time.timeScale = 0;
-                Debug.Log("Game Over");
+                if (gameOverPanel != null)
+                {
+                    gameOverPanel.GameOver();
+                }
+                else
+                {
+                    Debug.LogError("GameOverPanel is not assigned in the Inspector.");
+                }
             }
         }
     }
@@ -288,7 +301,7 @@ public class mainCharacter : MonoBehaviour
             {
                 // Respawn the character at the initial respawn position
                 Time.timeScale = 0;
-                Debug.Log("Game Over");
+               gameOverPanel.GameOver();
             }
             else
             {
@@ -417,7 +430,7 @@ public class mainCharacter : MonoBehaviour
         color.a = opacity;
         spriteRenderer.color = color;
     }
-
+   
     private IEnumerator ShineEffect(float duration)
     {
         // Enable the aura particle system
