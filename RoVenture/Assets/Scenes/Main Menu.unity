@@ -2458,6 +2458,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae26a7c365d3cf34ab1373d203b95d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 900274387}
+  - {fileID: 1870244718}
+  - {fileID: 85270587}
+  - {fileID: 672861653}
+  - {fileID: 908952808}
+  - {fileID: 15555964}
+  - {fileID: 1844972404}
+  - {fileID: 173182793}
+  - {fileID: 1217388336}
+  - {fileID: 1231324054}
 --- !u!1 &1371474730
 GameObject:
   m_ObjectHideFlags: 0
