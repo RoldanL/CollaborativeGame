@@ -211,10 +211,7 @@ public class mainCharacter : MonoBehaviour
                 Debug.Log("Game Over");
             }
         }
-        if (collision.gameObject.CompareTag("Door"))
-        {
-            //SceneManager.LoadScene("Level 2");
-        }
+   
     }
 
     IEnumerator BlinkingEffect()
@@ -277,6 +274,11 @@ public class mainCharacter : MonoBehaviour
             }
         }
         Debug.Log("Triggered: " + collision.gameObject.name); // Debug log for checking if OnTriggerEnter2D is called
+
+        if (collision.gameObject.CompareTag("Door"))
+        {
+            //SceneManager.LoadScene("Level 2");
+        }
 
     }
 
