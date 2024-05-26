@@ -24,6 +24,7 @@ public class mainCharacter : MonoBehaviour
     [SerializeField] private AudioClip shootSound;
     [SerializeField] private AudioClip powerupsSound;
     [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioClip jumpSound;
     private float lastShootTime; // Time of the last shot
     private float shootCooldown = 2f; // Cooldown between shots
     private int enemyLayer; // Layer of the enemies
@@ -74,6 +75,10 @@ public class mainCharacter : MonoBehaviour
                 jumpsLeft--;
             }
             rb.velocity = new Vector2(rb.velocity.x, 7f);
+            if (jumpSound != null)
+            {
+                AudioSource.PlayClipAtPoint(jumpSound, transform.position);
+            }
         }
 
         // Check if the attack key is pressed down
