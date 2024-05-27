@@ -36,7 +36,9 @@ public class mainCharacter : MonoBehaviour
 
     // UI Text to show remaining life
     public Text lifeText;
-
+    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource gameOverSource;
+    [SerializeField] private AudioSource levelAccomplishedSource;
     // Start is called before the first frame update
     private void Start()
     {
@@ -206,14 +208,25 @@ public class mainCharacter : MonoBehaviour
             // Check if life is zero
             if (life <= 0)
             {
+                if (gameOverSource != null)
+                {
+                    gameOverSource.Play();
+                    
+                }
+                Debug.Log("Game over sound played");
                 Time.timeScale = 0;
                 if (gameOverPanel != null)
                 {
-                    gameOverPanel.GameOver();
+                                   gameOverPanel.GameOver();
                 }
                 else
                 {
                     Debug.LogError("GameOverPanel is not assigned in the Inspector.");
+                }
+
+                if (musicAudioSource != null)
+                {
+                    musicAudioSource.Stop();
                 }
             }
             else
@@ -238,7 +251,12 @@ public class mainCharacter : MonoBehaviour
             }
             else
             {
+                if (gameOverSource != null)
+                {
+                    gameOverSource.Play();
+                }
                 Time.timeScale = 0;
+               
                 if (gameOverPanel != null)
                 {
                     gameOverPanel.GameOver();
@@ -246,6 +264,11 @@ public class mainCharacter : MonoBehaviour
                 else
                 {
                     Debug.LogError("GameOverPanel is not assigned in the Inspector.");
+                }
+
+                if (musicAudioSource != null)
+                {
+                    musicAudioSource.Stop();
                 }
             }
         }
@@ -304,9 +327,19 @@ public class mainCharacter : MonoBehaviour
             // Check if life is zero
             if (life <= 0)
             {
+                if (gameOverSource != null)
+                {
+                    gameOverSource.Play();
+                }
                 // Respawn the character at the initial respawn position
                 Time.timeScale = 0;
-               gameOverPanel.GameOver();
+                
+                gameOverPanel.GameOver();
+
+                if (musicAudioSource != null)
+                {
+                    musicAudioSource.Stop();
+                }
             }
             else
             {
@@ -318,6 +351,16 @@ public class mainCharacter : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Door"))
         {
+            if (levelAccomplishedSource != null)
+            {
+                levelAccomplishedSource.Play();
+
+            }
+
+            if (musicAudioSource != null)
+            {
+                musicAudioSource.Stop();
+            }
             //SceneManager.LoadScene("Level 2");
         }
     }
