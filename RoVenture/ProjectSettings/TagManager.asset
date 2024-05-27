@@ -17,6 +17,7 @@ TagManager:
   - EnemyBig
   - Door
   - NewDoor
+  - Door3
   layers:
   - Default
   - TransparentFX

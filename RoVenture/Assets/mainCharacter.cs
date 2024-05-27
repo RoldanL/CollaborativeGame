@@ -352,33 +352,17 @@ public class mainCharacter : MonoBehaviour
         if (collision.gameObject.CompareTag("Door"))
         {
             UnlockedNewLevel();
-            SceneManager.LoadScene("Level 2");
-            if (levelAccomplishedSource != null)
-            {
-                levelAccomplishedSource.Play();
-
-            }
-
-            if (musicAudioSource != null)
-            {
-                musicAudioSource.Stop();
-            }
-           
+            StartCoroutine(HandleLevelTransition("Level 2"));
         }
-        if (collision.gameObject.CompareTag("NewDoor"))
+        else if (collision.gameObject.CompareTag("NewDoor"))
         {
             UnlockedNewLevel();
-            SceneManager.LoadScene("Level 3");
-            if (levelAccomplishedSource != null)
-            {
-                levelAccomplishedSource.Play();
-            }
-
-            if (musicAudioSource != null)
-            {
-                musicAudioSource.Stop();
-            }
-            
+            StartCoroutine(HandleLevelTransition("Level 3"));
+        }
+        else if (collision.gameObject.CompareTag("Door3"))
+        {
+            UnlockedNewLevel();
+            StartCoroutine(HandleLevelTransition("Main Menu"));
         }
     }
     void UnlockedNewLevel()
@@ -522,5 +506,25 @@ public class mainCharacter : MonoBehaviour
             auraParticleSystem.Stop();
             Debug.Log("no particle detected");
         }
+    }
+
+    private IEnumerator HandleLevelTransition(string nextLevel)
+    {
+        Time.timeScale = 0;
+
+        if (levelAccomplishedSource != null)
+        {
+            levelAccomplishedSource.Play();
+        }
+
+        if (musicAudioSource != null)
+        {
+            musicAudioSource.Stop();
+        }
+
+        yield return new WaitForSecondsRealtime(2.2f);
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene(nextLevel);
     }
 }
