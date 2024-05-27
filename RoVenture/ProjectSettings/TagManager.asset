@@ -16,6 +16,7 @@ TagManager:
   - laser
   - EnemyBig
   - Door
+  - NewDoor
   layers:
   - Default
   - TransparentFX

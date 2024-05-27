@@ -351,6 +351,8 @@ public class mainCharacter : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Door"))
         {
+            UnlockedNewLevel();
+            SceneManager.LoadScene("Level 2");
             if (levelAccomplishedSource != null)
             {
                 levelAccomplishedSource.Play();
@@ -361,11 +363,33 @@ public class mainCharacter : MonoBehaviour
             {
                 musicAudioSource.Stop();
             }
-            Time.timeScale = 0;
-            //SceneManager.LoadScene("Level 2");
+           
+        }
+        if (collision.gameObject.CompareTag("NewDoor"))
+        {
+            UnlockedNewLevel();
+            SceneManager.LoadScene("Level 3");
+            if (levelAccomplishedSource != null)
+            {
+                levelAccomplishedSource.Play();
+            }
+
+            if (musicAudioSource != null)
+            {
+                musicAudioSource.Stop();
+            }
+            
         }
     }
-
+    void UnlockedNewLevel()
+    {
+        if(SceneManager.GetActiveScene().buildIndex>= PlayerPrefs.GetInt("ReachedIndex"))
+        {
+            PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLvel", 1) + 1);
+            PlayerPrefs.Save();
+        }
+    }
     private void UpdateLifeText()
     {
         if (lifeText != null)
