@@ -361,6 +361,7 @@ public class mainCharacter : MonoBehaviour
             {
                 musicAudioSource.Stop();
             }
+            Time.timeScale = 0;
             //SceneManager.LoadScene("Level 2");
         }
     }
