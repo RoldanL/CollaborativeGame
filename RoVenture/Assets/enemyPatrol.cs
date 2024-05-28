@@ -7,7 +7,7 @@ public class enemyPatrol : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private bool movingRight = true;
-    public float speed = 30f;
+    [SerializeField] float speed = 30f;
     [SerializeField] private float distance = 2.0f;
 
     void Start()
