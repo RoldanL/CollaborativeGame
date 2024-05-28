@@ -5,7 +5,7 @@ using UnityEngine;
 public class raycastEnemy : MonoBehaviour
 {
     float direction = 1f;
-    private float moveSpeed = 6f;
+    [SerializeField] private float moveSpeed = 6f;
     private Rigidbody2D rb;
    // private SpriteRenderer spriteRenderer;
    // private bool movingRight = true;
